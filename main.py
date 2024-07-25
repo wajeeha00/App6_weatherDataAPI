@@ -2,9 +2,16 @@ from flask import Flask, request, jsonify,render_template
 import pandas as pd
 
 app =Flask(__name__)
+
+
+df1 = pd.read_csv("data_small\stations.txt", skiprows=17)
+df1=df1[['STAID','STANAME                                 ']]
+
+
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("home.html",data=df1.to_html()
+                           )
 
 @app.route("/api/v1/<station>/<date>")
 def about(station,date):
